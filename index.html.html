@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strength Zone - Vista sua Força</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Estilos Personalizados -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e7eb; /* text-gray-200 */
+        }
+
+        .neon-text {
+            text-shadow:
+                0 0 5px rgba(0, 255, 255, 0.7),
+                0 0 10px rgba(0, 255, 255, 0.7),
+                0 0 20px rgba(0, 255, 255, 0.7),
+                0 0 40px rgba(255, 0, 255, 0.7),
+                0 0 80px rgba(255, 0, 255, 0.7);
+        }
+
+        .hero-bg {
+            background-image: radial-gradient(circle at top, rgba(0, 255, 255, 0.1) 0%, rgba(0,0,0,0) 40%),
+                              radial-gradient(circle at bottom, rgba(255, 0, 255, 0.1) 0%, rgba(0,0,0,0) 40%);
+        }
+
+        .card-hover-glow {
+            transition: all 0.3s ease-in-out;
+            border: 1px solid #374151; /* border-gray-700 */
+        }
+
+        .card-hover-glow:hover {
+            border-color: #0891b2; /* border-cyan-600 */
+            box-shadow: 0 0 15px rgba(8, 145, 178, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cabeçalho -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-black tracking-wider text-white">STRENGTH ZONE</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#colecao" class="text-gray-300 hover:text-cyan-400 transition-colors">Coleção</a>
+                <a href="#manifesto" class="text-gray-300 hover:text-cyan-400 transition-colors">Manifesto</a>
+                <a href="#contato" class="text-gray-300 hover:text-cyan-400 transition-colors">Contato</a>
+            </div>
+            <button class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Seção Hero -->
+        <section class="min-h-screen flex items-center justify-center text-center hero-bg px-4">
+            <div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                    Vista sua Força
+                </h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+                    Camisetas oversized que libertam seu instinto. Estampas exclusivas inspiradas na força animal.
+                </p>
+                <a href="#colecao" class="mt-8 inline-block bg-cyan-500 text-black font-bold py-3 px-8 rounded-full uppercase tracking-wider hover:bg-cyan-400 hover:shadow-lg hover:shadow-cyan-500/50 transition-all transform hover:scale-105">
+                    Ver Coleção
+                </a>
+            </div>
+        </section>
+
+        <!-- Seção Coleção -->
+        <section id="colecao" class="py-20 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-black text-center mb-12 uppercase">Nossos Instintos</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Card de Produto 1 -->
+                    <div class="bg-gray-900 rounded-lg overflow-hidden card-hover-glow">
+                        <img src="https://placehold.co/600x700/0a0a0a/0891b2?text=Lobo+Neon" alt="Estampa de Lobo Neon" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-white">Camiseta Lobo Alfa</h3>
+                            <p class="mt-2 text-gray-400">Oversized fit, 100% algodão premium.</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-2xl font-black text-cyan-400">R$ 129,90</span>
+                                <button class="font-bold text-black bg-white py-2 px-5 rounded-full hover:bg-gray-200">Ver Detalhes</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card de Produto 2 -->
+                    <div class="bg-gray-900 rounded-lg overflow-hidden card-hover-glow">
+                        <img src="https://placehold.co/600x700/0a0a0a/d946ef?text=Tigre+Abstrato" alt="Estampa de Tigre Abstrato" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-white">Camiseta Fúria Felina</h3>
+                            <p class="mt-2 text-gray-400">Oversized fit, 100% algodão premium.</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-2xl font-black text-fuchsia-500">R$ 129,90</span>
+                                <button class="font-bold text-black bg-white py-2 px-5 rounded-full hover:bg-gray-200">Ver Detalhes</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card de Produto 3 -->
+                    <div class="bg-gray-900 rounded-lg overflow-hidden card-hover-glow">
+                        <img src="https://placehold.co/600x700/0a0a0a/ffffff?text=Águia+Urbana" alt="Estampa de Águia Urbana" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-white">Camiseta Águia Urbana</h3>
+                            <p class="mt-2 text-gray-400">Oversized fit, 100% algodão premium.</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-2xl font-black text-white">R$ 129,90</span>
+                                <button class="font-bold text-black bg-white py-2 px-5 rounded-full hover:bg-gray-200">Ver Detalhes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Manifesto -->
+        <section id="manifesto" class="py-20 bg-gray-900 px-4">
+            <div class="container mx-auto text-center max-w-4xl">
+                <h2 class="text-4xl font-black uppercase mb-6">Nossa Matilha</h2>
+                <p class="text-lg text-gray-400 leading-relaxed">
+                    A Strength Zone é mais que uma marca, é um manifesto. Cansamos do comum, do sem sal, do que te prende. Nossas estampas são gritos de liberdade, a força dos animais selvagens no concreto da cidade. Somos para os que não pedem licença, para os que lideram a matilha. Vista-se do que você é.
+                </p>
+            </div>
+        </section>
+
+        <!-- Seção Contato -->
+        <section id="contato" class="py-20 px-4">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-black uppercase mb-4">Faça Parte da Zona</h2>
+                <p class="text-lg text-gray-400 mb-8">Siga nosso instinto nas redes sociais.</p>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-fuchsia-500 transition-colors text-2xl font-semibold">Instagram</a>
+                    <a href="#" class="text-gray-400 hover:text-cyan-500 transition-colors text-2xl font-semibold">TikTok</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="border-t border-gray-800 py-8">
+        <div class="container mx-auto text-center text-gray-600">
+            <p>&copy; 2025 Strength Zone. Todos os direitos reservados.</p>
+            <p class="text-sm mt-2">Um projeto de teste para strengthzone.com.br</p>
+        </div>
+    </footer>
+
+    <!-- Script para Rolagem Suave -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
