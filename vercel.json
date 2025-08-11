@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/create-checkout-session.js": {
-      "includeFiles": "node_modules/stripe/**"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/create-checkout-session",
