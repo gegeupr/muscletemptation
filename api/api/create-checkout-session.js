@@ -5,6 +5,10 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 module.exports = async (req, res) => {
   const { priceId } = req.body;
 
+  if (req.method !== 'POST') {
+    return res.status(405).end();
+  }
+
   if (!priceId) {
     return res.status(400).json({ error: 'Price ID is required' });
   }
