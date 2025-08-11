@@ -38,19 +38,19 @@
                     <div class="plan-card">
                         <h3>1 Month</h3>
                         <p class="plan-price">$49.99</p>
-                        <button class="subscribe-btn" data-plan="si_Sqf3DskgEXdv89">Subscribe Now</button>
+                        <button class="subscribe-btn" data-plan="si_Sqi0glBwbtPH7M">Subscribe Now</button>
                     </div>
                     <div class="plan-card">
                         <h3>3 Months</h3>
                         <p class="plan-price">$119.98</p>
                         <p class="best-value-text">20% Discount</p>
-                        <button class="subscribe-btn" data-plan="si_Sqf6Fo0wKQiQPg">Subscribe Now</button>
+                        <button class="subscribe-btn" data-plan="si_Sqi3oykYIWCOMr">Subscribe Now</button>
                     </div>
                     <div class="plan-card">
                         <h3>6 Months</h3>
                         <p class="plan-price">$209.96</p>
                         <p class="best-value-text">30% Discount</p>
-                        <button class="subscribe-btn" data-plan="si_Sqf8nduo0UywTk">Subscribe Now</button>
+                        <button class="subscribe-btn" data-plan="si_Sqi4ZdGIyMGwLi">Subscribe Now</button>
                     </div>
                 </div>
             </main>
@@ -58,10 +58,8 @@
     </div>
 
     <script>
-        // Substitua 'pk_test_...' pela sua Chave Pública do Stripe
-        const stripe = Stripe('pk_test_51RuwqFAH7xZ8n4RFYNDHSGiVvj16eWu2ksArM9I9arzdTT33Ep8oD2eBashmrbZ2YbQDNaetGszW34Wg0R1x7ibY00nXMZ4dpm');
+        const stripe = Stripe('pk_live_51RuwpJPAjKddl2r7Neltxr5Ebo5evrUDPCpr9smiuK44WZvUi3Y3WyliKOk8EbQa5JFoHqQjKLlFqhNGXA5jpj4B00z4uU9B6d');
         
-        // Função para lidar com o clique no botão de assinatura
         document.querySelectorAll('.subscribe-btn').forEach(button => {
             button.addEventListener('click', async () => {
                 const priceId = button.dataset.plan;
