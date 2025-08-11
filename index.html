@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuscleTemptation - Exclusive Access</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="seu-video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="main-container">
+        <div class="content-wrapper">
+            <header class="main-header">
+                <h1 class="logo-text">MUSCLETEMPTATION</h1>
+                <div class="live-status online">
+                    <span class="live-indicator"></span>
+                    <span>Online</span>
+                </div>
+            </header>
+    
+            <main class="main-content">
+                <h2>Unveil the devotion. Experience the worship.</h2>
+                <p class="centered-text">Welcome to my sacred space as a Worship Muscle model. Unlock my exclusive content and an intimate experience of strength and spirit.</p>
+                
+                <div class="subscription-plans">
+                    <div class="plan-card">
+                        <h3>1 Month</h3>
+                        <p class="plan-price">$49.99</p>
+                        <button class="subscribe-btn" data-plan="si_Sqf3DskgEXdv89">Subscribe Now</button>
+                    </div>
+                    <div class="plan-card">
+                        <h3>3 Months</h3>
+                        <p class="plan-price">$119.98</p>
+                        <p class="best-value-text">20% Discount</p>
+                        <button class="subscribe-btn" data-plan="si_Sqf6Fo0wKQiQPg">Subscribe Now</button>
+                    </div>
+                    <div class="plan-card">
+                        <h3>6 Months</h3>
+                        <p class="plan-price">$209.96</p>
+                        <p class="best-value-text">30% Discount</p>
+                        <button class="subscribe-btn" data-plan="si_Sqf8nduo0UywTk">Subscribe Now</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Substitua 'pk_test_...' pela sua Chave Pública do Stripe
+        const stripe = Stripe('pk_test_51RuwqFAH7xZ8n4RFYNDHSGiVvj16eWu2ksArM9I9arzdTT33Ep8oD2eBashmrbZ2YbQDNaetGszW34Wg0R1x7ibY00nXMZ4dpm');
+        
+        // Função para lidar com o clique no botão de assinatura
+        document.querySelectorAll('.subscribe-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                const priceId = button.dataset.plan;
+
+                try {
+                    const response = await fetch('/api/create-checkout-session', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ priceId: priceId })
+                    });
+
+                    const session = await response.json();
+                    
+                    if (session.id) {
+                        stripe.redirectToCheckout({
+                            sessionId: session.id
+                        });
+                    } else {
+                        console.error("Erro ao criar a sessão de checkout:", session.error);
+                        alert("Ocorreu um erro. Por favor, tente novamente.");
+                    }
+
+                } catch (error) {
+                    console.error('Erro na solicitação:', error);
+                    alert("Ocorreu um erro. Por favor, tente novamente.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
