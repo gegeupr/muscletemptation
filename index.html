@@ -1,143 +1,95 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const Stripe = require('stripe');
-const nodemailer = require('nodemailer');
-const { createClient } = require('@supabase/supabase-js');
-const crypto = require('crypto');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuscleTemptation - Exclusive Access</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="seu-video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
 
-// Chaves de API do Stripe (LIVE)
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET_KEY;
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+    <div class="main-container">
+        <div class="content-wrapper">
+            <header class="main-header">
+                <h1 class="logo-text">MUSCLETEMPTATION</h1>
+                <div class="live-status online">
+                    <span class="live-indicator"></span>
+                    <span>Online</span>
+                </div>
+            </header>
+    
+            <main class="main-content">
+                <h2>Unveil the devotion. Experience the worship.</h2>
+                <p class="centered-text">Welcome to my sacred space as a Worship Muscle model. Unlock my exclusive content and an intimate experience of strength and spirit.</p>
+                
+                <div class="subscription-plans">
+                    <div class="plan-card">
+                        <h3>1 Month</h3>
+                        <p class="plan-price">$49.99</p>
+                        <button class="subscribe-btn" data-plan="price_1Rv0X3PAjKddl2r7et7AujAz">Subscribe Now</button>
+                    </div>
+                    <div class="plan-card">
+                        <h3>3 Months</h3>
+                        <p class="plan-price">$119.98</p>
+                        <p class="best-value-text">20% Discount</p>
+                        <button class="subscribe-btn" data-plan="price_1Rv0cwPAjKddl2r7t9Infac6">Subscribe Now</button>
+                    </div>
+                    <div class="plan-card">
+                        <h3>6 Months</h3>
+                        <p class="plan-price">$209.96</p>
+                        <p class="best-value-text">30% Discount</p>
+                        <button class="subscribe-btn" data-plan="price_1Rv0eMPAjKddl2r7Ek1TQSxC">Subscribe Now</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
 
-// Middleware para processar os webhooks
-app.use(express.json({
-  verify: function (req, res, buf) {
-    if (req.originalUrl.startsWith('/api/webhook')) {
-      req.rawBody = buf.toString();
-    }
-  },
-}));
+    <script>
+        const stripe = Stripe('pk_live_51RuwpJPAjKddl2r7Neltxr5Ebo5evrUDPCpr9smiuK44WZvUi3Y3WyliKOk8EbQa5JFoHqQjKLlFqhNGXA5jpj4B00z4uU9B6d');
+        
+        document.querySelectorAll('.subscribe-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                const priceId = button.dataset.plan;
 
-app.use(cors());
+                try {
+                    const response = await fetch('/api/create-checkout-session', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ priceId: priceId })
+                    });
 
-// Servindo os arquivos estáticos da pasta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+                    const session = await response.json();
+                    
+                    if (session.id) {
+                        stripe.redirectToCheckout({
+                            sessionId: session.id
+                        });
+                    } else {
+                        console.error("Erro ao criar a sessão de checkout:", session.error);
+                        alert("Ocorreu um erro. Por favor, tente novamente.");
+                    }
 
-// Lógica para envio de email
-async function sendEmail(toEmail, subject, text) {
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
-  let mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: toEmail,
-    subject: subject,
-    text: text
-  };
-
-  await transporter.sendMail(mailOptions);
-}
-
-// Endpoint para criar a sessão de checkout
-app.post('/api/create-checkout-session', async (req, res) => {
-  const { priceId } = req.body;
-  if (!priceId) {
-    return res.status(400).json({ error: 'Price ID is required' });
-  }
-  try {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [{ price: priceId, quantity: 1 }],
-      mode: 'subscription',
-      success_url: 'https://muscletemptation.online/success.html',
-      cancel_url: 'https://muscletemptation.online/',
-    });
-    res.json({ id: session.id });
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao criar a sessão de checkout.' });
-  }
-});
-
-// Endpoint para receber os webhooks do Stripe (aqui a conta é criada)
-app.post('/api/webhook', async (req, res) => {
-  const sig = req.headers['stripe-signature'];
-  let event;
-  try {
-    event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);
-  } catch (err) {
-    return res.status(400).send(`Webhook Error: ${err.message}`);
-  }
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object;
-    try {
-      const userEmail = session.customer_details.email;
-      const temporaryPassword = crypto.randomBytes(8).toString('hex'); // Gera uma senha temporária segura
-      const hashedPassword = crypto.createHash('sha256').update(temporaryPassword).digest('hex');
-
-      const { data, error } = await supabase
-        .from('profiles')
-        .insert([{ 
-          email: userEmail, 
-          password_hash: hashedPassword, 
-          stripe_customer_id: session.customer, 
-          subscription_status: 'active' 
-        }]);
-
-      if (error) throw error;
-      
-      const emailSubject = 'Sua conta MuscleTemptation foi criada!';
-      const emailText = `Olá!\nSua assinatura foi confirmada. Use as credenciais abaixo para fazer login:\nEmail: ${userEmail}\nSenha temporária: ${temporaryPassword}`;
-
-      await sendEmail(userEmail, emailSubject, emailText);
-
-      console.log(`Novo usuário criado: ${userEmail}. E-mail de boas-vindas enviado.`);
-    } catch (dbError) {
-      console.error("Erro ao processar o webhook:", dbError);
-    }
-  }
-  res.status(200).json({ received: true });
-});
-
-// Endpoint para processar o login
-app.post('/api/login', async (req, res) => {
-  const { email, password } = req.body;
-  
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
-  }
-  
-  try {
-    const { data: users, error } = await supabase
-      .from('profiles')
-      .select('password_hash')
-      .eq('email', email);
-
-    if (error) throw error;
-    if (users.length === 0) {
-      return res.status(401).json({ error: 'Email ou senha inválidos.' });
-    }
-
-    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-    if (hashedPassword === users[0].password_hash) {
-      res.status(200).json({ message: 'Login bem-sucedido!' });
-    } else {
-      res.status(401).json({ error: 'Email ou senha inválidos.' });
-    }
-  } catch (dbError) {
-    console.error("Erro ao processar o login:", dbError);
-    res.status(500).json({ error: 'Erro interno no servidor.' });
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+                } catch (error) {
+                    console.error('Erro na solicitação:', error);
+                    alert("Ocorreu um erro. Por favor, tente novamente.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
