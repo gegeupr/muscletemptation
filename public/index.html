@@ -1,92 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MuscleTemptation - Exclusive Access</title>
-    <link rel="stylesheet" href="style.css">
+    <title>StrengthZone - Worship Muscle</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://js.stripe.com/v3/"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <div class="video-container">
-        <video autoplay muted loop id="background-video">
-            <source src="seu-video.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos HTML5.
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="videos/seu-video.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
 
-    <div class="main-container">
-        <div class="content-wrapper">
-            <header class="main-header">
-                <h1 class="logo-text">MUSCLETEMPTATION</h1>
-                <div class="live-status online">
-                    <span class="live-indicator"></span>
-                    <span>Online</span>
+    <div class="container">
+        <header>
+            <div class="logo">StrengthZone</div>
+            <div class="online-indicator">Online</div>
+        </header>
+
+        <main class="main-content">
+            <h1 class="headline">Unveil the devotion.<br>Experience the worship.</h1>
+            <p class="sub-headline">
+                Welcome to my sacred space as a Worship Muscle model.
+                Unlock my exclusive content and an intimate experience of strength and spirit.
+            </p>
+
+            <div id="plans" class="plans-container">
+                <div class="plan-box">
+                    <h3>1 Month</h3>
+                    <div class="price">$49.99</div>
+                    <button class="subscribe-button" data-price-id="price_1Pq..."> Subscribe Now
+                    </button>
                 </div>
-            </header>
-    
-            <main class="main-content">
-                <h2>Unveil the devotion. Experience the worship.</h2>
-                <p class="centered-text">Welcome to my sacred space as a Worship Muscle model. Unlock my exclusive content and an intimate experience of strength and spirit.</p>
+
+                <div class="plan-box">
+                    <h3>3 Months</h3>
+                    <div class="price">$119.98</div>
+                    <div class="discount">20% DISCOUNT</div>
+                    <button class="subscribe-button" data-price-id="price_1Pq..."> Subscribe Now
+                    </button>
+                </div>
                 
-                <div class="subscription-plans">
-                    <div class="plan-card">
-                        <h3>1 Month</h3>
-                        <p class="plan-price">$49.99</p>
-                        <button class="subscribe-btn" data-plan="price_1Rv0X3PAjKddl2r7et7AujAz">Subscribe Now</button>
-                    </div>
-                    <div class="plan-card">
-                        <h3>3 Months</h3>
-                        <p class="plan-price">$119.98</p>
-                        <p class="best-value-text">20% Discount</p>
-                        <button class="subscribe-btn" data-plan="price_1Rv0cwPAjKddl2r7t9Infac6">Subscribe Now</button>
-                    </div>
-                    <div class="plan-card">
-                        <h3>6 Months</h3>
-                        <p class="plan-price">$209.96</p>
-                        <p class="best-value-text">30% Discount</p>
-                        <button class="subscribe-btn" data-plan="price_1Rv0eMPAjKddl2r7Ek1TQSxC">Subscribe Now</button>
-                    </div>
                 </div>
-            </main>
-        </div>
+        </main>
     </div>
 
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
-        const stripe = Stripe('pk_live_51RuwpJPAjKddl2r7Neltxr5Ebo5evrUDPCpr9smiuK44WZvUi3Y3WyliKOk8EbQa5JFoHqQjKLlFqhNGXA5jpj4B00z4uU9B6d');
-        
-        document.querySelectorAll('.subscribe-btn').forEach(button => {
-            button.addEventListener('click', async () => {
-                const priceId = button.dataset.plan;
+        document.addEventListener('DOMContentLoaded', () => {
+            // SUBSTITUA PELA SUA CHAVE PUBLICÁVEL REAL DO STRIPE (Publishable Key)
+            const stripe = Stripe('pk_test_51Pq...');
 
-                try {
-                    const response = await fetch('/api/create-checkout-session', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ priceId: priceId })
-                    });
+            const planContainer = document.querySelector('.plans-container');
 
-                    const session = await response.json();
+            planContainer.addEventListener('click', async (event) => {
+                // Verifica se o clique foi em um botão de assinatura
+                if (event.target.classList.contains('subscribe-button')) {
+                    const button = event.target;
+                    const priceId = button.dataset.priceId;
+
+                    if (!priceId) {
+                        alert('Erro: ID do plano não encontrado.');
+                        return;
+                    }
                     
-                    if (session.id) {
-                        stripe.redirectToCheckout({
+                    try {
+                        // 1. Chama o seu backend para criar a sessão de checkout
+                        const response = await fetch('/api/create-checkout-session', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ priceId: priceId })
+                        });
+
+                        const session = await response.json();
+
+                        if(session.error) {
+                            alert(session.error);
+                            return;
+                        }
+
+                        // 2. Redireciona o cliente para a página de pagamento do Stripe
+                        const result = await stripe.redirectToCheckout({
                             sessionId: session.id
                         });
-                    } else {
-                        console.error("Erro ao criar a sessão de checkout:", session.error);
-                        alert("Ocorreu um erro. Por favor, tente novamente.");
-                    }
 
-                } catch (error) {
-                    console.error('Erro na solicitação:', error);
-                    alert("Ocorreu um erro. Por favor, tente novamente.");
+                        if (result.error) {
+                            alert(result.error.message);
+                        }
+                    } catch (error) {
+                        console.error('Erro:', error);
+                        alert('Não foi possível iniciar o processo de pagamento.');
+                    }
                 }
             });
         });
