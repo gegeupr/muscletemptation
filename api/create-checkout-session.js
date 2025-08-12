@@ -1,9 +1,7 @@
 const Stripe = require('stripe');
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-// A chave secreta é carregada automaticamente pelo Vercel
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY); 
-
-export default async (req, res) => {
+module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).send('Method Not Allowed');
   }
@@ -12,12 +10,7 @@ export default async (req, res) => {
 
   try {
     const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
+      line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
       success_url: 'https://muscletemptation.online/success.html',
       cancel_url: 'https://muscletemptation.online/',
