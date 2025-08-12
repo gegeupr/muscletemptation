@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Website with Stripe API for Muscle Temptation",
   "dependencies": {
+    "cors": "^2.8.5",
     "stripe": "^13.1.0"
   }
 }
