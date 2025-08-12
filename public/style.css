@@ -4,7 +4,7 @@
     --neon-red: #ff007f;
     --text-color: #fff;
     --card-bg: rgba(255, 255, 255, 0.05);
-    --neon-green: #00ff00; /* Nova cor neon verde */
+    --neon-green: #00ff00;
 }
 
 body {
@@ -92,15 +92,15 @@ body {
 }
 
 .live-status.online {
-    background-color: rgba(0, 255, 0, 0.7); /* Cor de fundo verde */
+    background-color: rgba(0, 255, 0, 0.7);
 }
 
 .live-indicator {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #00ff00; /* Cor do indicador verde */
-    box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; /* Sombra verde */
+    background-color: #00ff00;
+    box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
     animation: pulsate 1s infinite;
 }
 
