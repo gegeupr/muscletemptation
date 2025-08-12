@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - StrengthZone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="video-overlay"></div>
+    <video autoplay muted loop id="bg-video">
+        <source src="seu-video3.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos.
+    </video>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Área Exclusiva</h2>
+            <form id="login-form">
+                <div id="error-message"></div>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Senha" required>
+                <button type="submit">ENTRAR</button>
+            </form>
+            <div class="links">
+                <a href="#">Esqueceu a senha?</a>
+            </div>
+             <div class="links" style="margin-top: 20px;">
+                <span>Não é membro? <a href="/index.html#planos">Assine agora</a></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>
