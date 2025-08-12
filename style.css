@@ -409,3 +409,47 @@ body {
         gap: 10px;
     }
 }
+
+.call-to-action {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.call-to-action h3 {
+    font-size: 2rem;
+    color: var(--neon-red);
+    text-shadow: 0 0 5px var(--neon-red);
+}
+
+.call-to-action p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 10px auto;
+}
+
+.checkout-explanation {
+    margin-top: 50px;
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.checkout-explanation h4 {
+    font-size: 1.5rem;
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+    margin-bottom: 20px;
+}
+
+.checkout-explanation p {
+    font-size: 1rem;
+    margin: 10px 0;
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .call-to-action h3 {
+        font-size: 1.5rem;
+    }
+}
