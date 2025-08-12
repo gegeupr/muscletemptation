@@ -1,24 +1,14 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
 const Stripe = require('stripe');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// A chave secreta é carregada automaticamente pelo Vercel
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY); 
 
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
-app.use(cors());
-app.use(express.json());
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.post('/api/create-checkout-session', async (req, res) => {
-  const { priceId } = req.body;
-
-  if (!priceId) {
-    return res.status(400).json({ error: 'Price ID is required' });
+export default async (req, res) => {
+  if (req.method !== 'POST') {
+    return res.status(405).send('Method Not Allowed');
   }
+
+  const { priceId } = req.body;
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -38,8 +28,4 @@ app.post('/api/create-checkout-session', async (req, res) => {
     console.error('Erro ao criar a sessão de checkout:', error);
     res.status(500).json({ error: 'Erro ao criar a sessão de checkout.' });
   }
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+};
