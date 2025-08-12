@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Website with Stripe API for Muscle Temptation",
   "dependencies": {
-    "@supabase/supabase-js": "^2.55.0",
     "stripe": "^13.1.0"
   }
 }
