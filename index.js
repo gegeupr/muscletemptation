@@ -6,13 +6,12 @@ const Stripe = require('stripe');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Substitua com a sua Chave Secreta do Stripe
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 app.use(cors());
 app.use(express.json());
 
-// Servindo os arquivos estáticos da página principal
+// Servindo todos os arquivos estáticos da pasta raiz
 app.use(express.static(path.join(__dirname, '')));
 
 // Endpoint para criar a sessão de checkout
@@ -43,6 +42,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
   }
 });
 
+// Endpoint para verificar a assinatura (ainda não implementado)
 app.post('/api/verify-subscription', async (req, res) => {
   res.status(200).json({ message: 'Verificação em desenvolvimento.' });
 });
