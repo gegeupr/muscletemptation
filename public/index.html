@@ -4,17 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StrengthZone - Worship Muscle</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="video-background">
         <video autoplay muted loop playsinline id="bg-video">
-            <source src="videos/seu-video.mp4" type="video/mp4">
+            <source src="videos/background-video.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
@@ -36,7 +31,8 @@
                 <div class="plan-box">
                     <h3>1 Month</h3>
                     <div class="price">$49.99</div>
-                    <button class="subscribe-button" data-price-id="price_1Pq..."> Subscribe Now
+                    <button class="subscribe-button" data-price-id="COLE_AQUI_SEU_PRICE_ID_DE_1_MES">
+                        Subscribe Now
                     </button>
                 </div>
 
@@ -44,63 +40,49 @@
                     <h3>3 Months</h3>
                     <div class="price">$119.98</div>
                     <div class="discount">20% DISCOUNT</div>
-                    <button class="subscribe-button" data-price-id="price_1Pq..."> Subscribe Now
+                    <button class="subscribe-button" data-price-id="COLE_AQUI_SEU_PRICE_ID_DE_3_MESES">
+                        Subscribe Now
                     </button>
                 </div>
-                
-                </div>
+            </div>
         </main>
     </div>
 
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // SUBSTITUA PELA SUA CHAVE PUBLICÁVEL REAL DO STRIPE (Publishable Key)
-            const stripe = Stripe('pk_test_51Pq...');
+            // =======================================================================
+            // PASSO 3: COLE SUA CHAVE PUBLICÁVEL (Publishable Key) DO STRIPE AQUI
+            // =======================================================================
+            const stripe = Stripe('COLE_AQUI_SUA_CHAVE_PUBLICAVEL_DO_STRIPE');
+            
+            const buttons = document.querySelectorAll('.subscribe-button');
 
-            const planContainer = document.querySelector('.plans-container');
-
-            planContainer.addEventListener('click', async (event) => {
-                // Verifica se o clique foi em um botão de assinatura
-                if (event.target.classList.contains('subscribe-button')) {
-                    const button = event.target;
+            buttons.forEach(button => {
+                button.addEventListener('click', async () => {
                     const priceId = button.dataset.priceId;
-
-                    if (!priceId) {
-                        alert('Erro: ID do plano não encontrado.');
-                        return;
-                    }
                     
                     try {
-                        // 1. Chama o seu backend para criar a sessão de checkout
                         const response = await fetch('/api/create-checkout-session', {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
+                            headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ priceId: priceId })
                         });
-
+                        
                         const session = await response.json();
 
-                        if(session.error) {
+                        if (session.error) {
                             alert(session.error);
                             return;
                         }
+                        
+                        await stripe.redirectToCheckout({ sessionId: session.id });
 
-                        // 2. Redireciona o cliente para a página de pagamento do Stripe
-                        const result = await stripe.redirectToCheckout({
-                            sessionId: session.id
-                        });
-
-                        if (result.error) {
-                            alert(result.error.message);
-                        }
                     } catch (error) {
-                        console.error('Erro:', error);
-                        alert('Não foi possível iniciar o processo de pagamento.');
+                        console.error('Erro ao criar sessão de checkout:', error);
+                        alert('Não foi possível iniciar o pagamento. Tente novamente.');
                     }
-                }
+                });
             });
         });
     </script>

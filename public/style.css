@@ -1,31 +1,31 @@
-/* Importa a fonte Rajdhani do Google Fonts */
+/* Importa a fonte correta do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
 
-/* --- ESTILOS GERAIS E RESET --- */
+/* --- RESET E ESTILOS GERAIS --- */
 body, html {
     height: 100%;
     margin: 0;
-    /* Usa a nova fonte e uma alternativa padrão */
     font-family: 'Rajdhani', sans-serif;
-    background-color: #000; /* Fundo preto para destacar o neon */
+    background-color: #000;
     color: #fff;
+    overflow-x: hidden; /* Previne scroll horizontal */
 }
 
-/* --- VÍDEO DE FUNDO --- */
+/* --- VÍDEO DE FUNDO E OVERLAY --- */
 .video-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     z-index: -2;
+    overflow: hidden;
 }
 
 #bg-video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que o vídeo cubra toda a tela sem distorcer */
+    object-fit: cover; /* Garante que o vídeo cubra a tela */
 }
 
 .video-overlay {
@@ -34,13 +34,15 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Overlay escuro para legibilidade */
+    background: rgba(0, 0, 0, 0.6); /* Overlay escuro para legibilidade */
     z-index: -1;
 }
 
-/* --- ESTILOS NEON E CONTEÚDO --- */
+/* --- CONTAINER E LAYOUT PRINCIPAL --- */
 .container {
-    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 25px 40px;
 }
 
 header {
@@ -50,112 +52,118 @@ header {
 }
 
 .logo {
-    font-size: 2.5rem; /* 40px */
+    font-size: 2.8rem;
     font-weight: 700;
     color: #ff00ff; /* Rosa Neon */
     text-transform: uppercase;
-    /* Efeito de brilho neon */
     text-shadow: 
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 15px #ff00ff,
+        0 0 5px #ff00ff,
+        0 0 10px #ff00ff,
         0 0 20px #ff00ff,
-        0 0 25px #ff00ff;
+        0 0 30px #ff00ff;
 }
 
 .online-indicator {
-    background-color: #ff0000; /* Vermelho vivo */
+    background-color: #d90429; /* Vermelho */
     color: #fff;
-    padding: 8px 20px;
+    padding: 8px 25px;
     border-radius: 50px;
     font-weight: 700;
-    font-size: 1rem;
-    /* Efeito de brilho para o botão */
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    border: 2px solid #e7133a;
     box-shadow: 
-        0 0 5px #ff0000,
-        0 0 10px #ff0000,
-        0 0 15px #ff0000;
+        0 0 5px #d90429,
+        0 0 10px #d90429;
 }
 
 .main-content {
     text-align: center;
-    margin-top: 10vh; /* Espaçamento do topo */
+    margin-top: 12vh;
 }
 
 .headline {
-    font-size: 3.5rem; /* 56px */
+    font-size: 3.8rem;
     font-weight: 700;
     color: #00ffff; /* Ciano Neon */
     line-height: 1.2;
-    text-shadow: 
-        0 0 5px #fff,
+    text-shadow:
+        0 0 5px #00ffff,
         0 0 10px #00ffff,
-        0 0 15px #00ffff;
+        0 0 20px #00ffff;
 }
 
 .sub-headline {
-    font-size: 1.25rem; /* 20px */
-    max-width: 600px;
-    margin: 20px auto 0;
-    line-height: 1.5;
-    color: #f0f0f0;
+    font-size: 1.3rem;
+    max-width: 650px;
+    margin: 25px auto 0;
+    line-height: 1.6;
+    color: #e0e0e0;
+    font-weight: 500;
 }
 
 /* --- PLANOS DE ASSINATURA --- */
 .plans-container {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin-top: 50px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 60px;
 }
 
 .plan-box {
-    border: 2px solid #ff00ff; /* Borda rosa neon */
-    padding: 20px;
+    border: 2px solid #ff00ff;
+    padding: 25px 35px;
     border-radius: 10px;
     width: 280px;
-    background: rgba(255, 0, 255, 0.05); /* Fundo levemente rosado */
-    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5); /* Sombra neon */
+    background: rgba(255, 0, 255, 0.05);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
     text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.plan-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
 }
 
 .plan-box h3 {
-    font-size: 1.8rem;
-    color: #00ffff; /* Ciano Neon */
+    font-size: 1.9rem;
+    color: #ff00ff; /* Rosa Neon */
     margin-top: 0;
-    text-shadow: 0 0 8px #00ffff;
+    text-shadow: 0 0 10px #ff00ff;
 }
 
 .plan-box .price {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 700;
-    color: #fff;
+    color: #00ffff; /* Ciano Neon */
     margin: 10px 0;
+    text-shadow: 0 0 10px #00ffff;
 }
 
 .plan-box .discount {
-    color: #f0f0f0;
-    background-color: rgba(0, 255, 255, 0.2); /* Fundo ciano para o desconto */
-    padding: 5px;
-    border-radius: 5px;
-    display: inline-block;
+    color: #ffc8dd;
+    font-size: 1rem;
 }
 
 .subscribe-button {
     margin-top: 25px;
-    padding: 12px 30px;
+    padding: 15px 40px;
     border: none;
     border-radius: 5px;
     color: #fff;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-family: 'Rajdhani', sans-serif;
     text-transform: uppercase;
     cursor: pointer;
-    background: linear-gradient(45deg, #da00ff, #ff0055); /* Gradiente do botão */
+    background: linear-gradient(45deg, #a000ff, #ff0055);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .subscribe-button:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px #ff0055;
+    box-shadow: 0 0 25px #ff0055;
 }
