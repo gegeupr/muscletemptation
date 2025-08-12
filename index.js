@@ -11,7 +11,7 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 app.use(cors());
 app.use(express.json());
 
-// Servindo todos os arquivos estáticos da pasta 'public'
+// Servindo os arquivos estáticos da pasta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/api/create-checkout-session', async (req, res) => {
