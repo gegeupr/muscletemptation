@@ -46,7 +46,7 @@
                     <div class="plan-card">
                         <h3>1 Month</h3>
                         <p class="plan-price">$49.99</p>
-                        <button class="subscribe-btn" data-plan="price_1Rv0X3PAjKddl2r7et7AujAz">Subscribe Now</button>
+                        <button class="subscribe-btn" data-plan="price_1RuxbAAH7xZ8n4RFB9pOHU7c">Subscribe Now</button>
                     </div>
                     <div class="plan-card">
                         <h3>3 Months</h3>
@@ -73,10 +73,10 @@
     </div>
 
     <script>
-        const stripe = Stripe('pk_live_51RuwpJPAjKddl2r7Neltxr5Ebo5evrUDPCpr9smiuK44WZvUi3Y3WyliKOk8EbQa5JFoHqQjKLlFqhNGXA5jpj4B00z4uU9B6d');
+        const stripe = Stripe('pk_test_51RuwqFAH7xZ8n4RFYNDHSGiVvj16eWu2ksArM9I9arzdTT33Ep8oD2eBashmrbZ2YbQDNaetGszW34Wg0R1x7ibY00nXMZ4dpm');
         
         document.querySelectorAll('.subscribe-btn').forEach(button => {
-            button.addEventListener('click', async () => {
+            button.addEventListener('click', async () =>  {
                 const priceId = button.dataset.plan;
 
                 try {
