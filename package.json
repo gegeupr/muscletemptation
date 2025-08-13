@@ -2,16 +2,8 @@
   "name": "muscletemptation",
   "version": "1.0.0",
   "description": "Website with Stripe API for Muscle Temptation",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "dependencies": {
-    "@supabase/supabase-js": "^2.38.4",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
-    "express": "^4.19.2",
-    "nodemailer": "^6.9.13",
     "stripe": "^13.1.0"
   }
 }
