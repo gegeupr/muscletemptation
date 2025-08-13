@@ -1,13 +1,10 @@
 {
   "functions": {
-    "api/webhook.js": {
+    "api/create-checkout-session.js": {
       "runtime": "@vercel/node"
     }
   },
   "rewrites": [
-    {
-      "source": "/api/webhook",
-      "destination": "/api/webhook.js"
-    }
+    { "source": "/api/(.*)", "destination": "/api/create-checkout-session" }
   ]
 }
