@@ -76,7 +76,7 @@
         const stripe = Stripe('pk_live_51RuwpJPAjKddl2r7Neltxr5Ebo5evrUDPCpr9smiuK44WZvUi3Y3WyliKOk8EbQa5JFoHqQjKLlFqhNGXA5jpj4B00z4uU9B6d');
         
         document.querySelectorAll('.subscribe-btn').forEach(button => {
-            button.addEventListener('click', async () => {
+            button.addEventListener('click', async () =>  {
                 const priceId = button.dataset.plan;
 
                 try {
